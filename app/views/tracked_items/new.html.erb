@@ -1,0 +1,20 @@
+<h1>TrackedItems#create</h1>
+<p>Find me in app/views/tracked_items/create.html.erb</p>
+<%= form_for @tracked_item do |form| %>
+  <p>
+    <%= form.label :item_name %><br />
+    <%= form.text_field :item_name %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<style>
+  h1 {
+    color: white;
+  }
+  p {
+    color: white;
+  }
+</style>

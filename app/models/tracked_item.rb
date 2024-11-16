@@ -1,0 +1,2 @@
+class TrackedItem < ApplicationRecord
+end
