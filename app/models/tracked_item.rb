@@ -9,6 +9,7 @@ class TrackedItem < ApplicationRecord
 
     update(
       last_request_success: json["success"],
+      last_request_time: Time.now,
       lowest_price: json["lowest_price"],
       median_price: json["median_price"],
       volume_sold: json["volume"].to_i,

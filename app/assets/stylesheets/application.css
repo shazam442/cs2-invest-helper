@@ -90,3 +90,19 @@ tbody tr:hover {
 th {
   color: #fff;
 }
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+}

@@ -4,20 +4,34 @@
     <a target="_blank" href=<%= "#{item.steam_market_url}"%>>
       <%= item.item_name %>
     </a>
-    -
-    <a target="_blank" href=<%= "#{item.steam_market_price_overview_url}"%>>
-      (json)
+      ---
+      <a target="_blank" href=<%= "#{item.steam_market_price_overview_url}"%>>
+      json
   </td>
-  <% if item.price_overview_json && item.price_overview_json["success"] != false %>
-    <td><%= item.price_overview_json["lowest_price"] %></td>
-    <td></td>
-  <% else %>
-    <td colspan="2">failed</td>
-  <% end %>
-  <td>
-    <%= form_with url: tracked_item_price_overview_json_path(item), method: :post, local: true do %>
-      <%= hidden_field_tag :tracked_item_id, item.id %>
-      <%= submit_tag "Get Price Data" %>
+  <% if item.last_request_success %>
+    <td><%= item.lowest_price || item.median_price || "failed" %></td>
+      <td><%= item.volume_sold || "failed" %></td>
+    <% else %>
+      <td colspan="2">failed</td>
     <% end %>
-  </td>
-</tr>
+    <td>
+      <%= form_with url: tracked_item_price_overview_json_path(item), method: :post, local: true do %>
+        <%= hidden_field_tag :tracked_item_id, item.id %>
+        <%=
+            submit_tag "Get Price Data",
+            class: item.last_request_success ? "btn btn-success" : "btn btn-danger"
+          %>
+      <% end %>
+    </td>
+    <td>
+      <%# use readable format %>
+      <%# <%=  %>
+      <% if item.last_request_time %>
+        <%= time_ago_in_words(item.last_request_time) %> ago
+      <% else %>
+        <p style="color:thistle">
+          unknown
+        </p>
+      <% end %>
+    </td>
+  </tr>
