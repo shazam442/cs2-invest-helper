@@ -12,13 +12,13 @@ class TrackedItem < ApplicationRecord
       last_request_time: Time.now,
       lowest_price: json["lowest_price"],
       median_price: json["median_price"],
-      volume_sold: json["volume"].to_i,
+      volume_sold: json["volume"].gsub(/\D/, ""),
       price_overview_json: json
     )
   end
 
   def steam_market_price_overview_url
-    URI::Parser.new.escape(BASE_STEAM_API_URL + item_name)
+    BASE_STEAM_API_URL + uri_encoded_item_name
   end
 
   def steam_market_url # parse url
@@ -26,6 +26,10 @@ class TrackedItem < ApplicationRecord
   end
 
   private
+
+  def uri_encoded_item_name
+    URI::Parser.new.escape(item_name).gsub("&", "%26")
+  end
 
   BASE_STEAM_API_URL = "https://steamcommunity.com/market/priceoverview/?country=DE&currency=3&appid=730&market_hash_name=".freeze
 end

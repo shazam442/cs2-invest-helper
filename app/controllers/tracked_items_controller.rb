@@ -1,6 +1,6 @@
 class TrackedItemsController < ApplicationController
   def index
-    @tracked_items = TrackedItem.all
+    @tracked_items = TrackedItem.order((params[:sort] || :id) => (params[:direction] || :asc))
   end
   def show
   end
