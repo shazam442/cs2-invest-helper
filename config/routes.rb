@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :posts
   resources :tracked_items
   post "tracked_items/:id/price_data", to: "tracked_items#price_data", as: :tracked_item_price_data
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

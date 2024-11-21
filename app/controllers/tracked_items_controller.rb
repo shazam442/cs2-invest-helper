@@ -1,6 +1,7 @@
 class TrackedItemsController < ApplicationController
   def index
     @tracked_items = TrackedItem.all
+    console
   end
   def show
   end
