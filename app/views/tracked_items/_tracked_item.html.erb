@@ -1,6 +1,13 @@
 <tr>
   <td><%= item.id %></td>
-  <td><%= item.item_name %></td>
+  <td>
+    <a target="_blank" href=<%= "#{item.steam_market_url}"%>>
+      <%= item.item_name %>
+    </a>
+    -
+    <a target="_blank" href=<%= "#{item.steam_market_price_overview_url}"%>>
+      (json)
+  </td>
   <% if item.price_data && item.price_data["success"] != false %>
     <td><%= JSON.parse(item.price_data)["lowest_price"] %></td>
     <td><%= JSON.parse(item.price_data)["volume"] %></td>

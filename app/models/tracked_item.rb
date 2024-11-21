@@ -4,10 +4,18 @@ class TrackedItem < ApplicationRecord
   validates :price_data, presence: true, allow_blank: false
 
   def update_price_data
-    response = HTTParty.get(BASE_STEAM_API_URL + item_name)
+    response = HTTParty.get(steam_market_price_overview_url)
     self.price_data = response.body
 
     save
+  end
+
+  def steam_market_price_overview_url
+    URI::Parser.new.escape(BASE_STEAM_API_URL + item_name)
+  end
+
+  def steam_market_url # parse url
+    URI::Parser.new.escape("https://steamcommunity.com/market/listings/730/#{item_name}")
   end
 
   private
