@@ -1,0 +1,16 @@
+<tr>
+  <td><%= item.id %></td>
+  <td><%= item.item_name %></td>
+  <% if item.price_data && item.price_data["success"] != false %>
+    <td><%= JSON.parse(item.price_data)["lowest_price"] %></td>
+    <td><%= JSON.parse(item.price_data)["volume"] %></td>
+  <% else %>
+    <td colspan="2">failed</td>
+  <% end %>
+  <td>
+    <%= form_with url: tracked_item_price_data_path(item), method: :post, local: true do %>
+      <%= hidden_field_tag :tracked_item_id, item.id %>
+      <%= submit_tag "Get Price Data" %>
+    <% end %>
+  </td>
+</tr>

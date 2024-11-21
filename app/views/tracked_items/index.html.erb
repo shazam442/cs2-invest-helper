@@ -1,18 +1,16 @@
-<% @tracked_items.each do |item| %>
-
-    <p><%= "(#{item.id}) #{item.item_name}" %></p>
-    <%# pretty print price_data lowest_price and volume keys %>
-    <% if item.price_data %>
-        <p><%= "Lowest Price: #{JSON.parse(item.price_data)["lowest_price"]}" %></p>
-        <p><%= "Volume: #{JSON.parse(item.price_data)["volume"]}" %></p>
-    <% else %>
-        <p><%= '"if item.price_data" failed' %></p>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Item Name</th>
+      <th>Lowest Price</th>
+      <th>Volume</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tracked_items.each do |item| %>
+      <%= render partial: "tracked_item", locals: { item: item } %>
     <% end %>
-
-    <%# access tracked_item_price_data(item) via POST %>
-    <%= form_tag tracked_item_price_data_path(item), method: :post do %>
-        <%= hidden_field_tag :tracked_item_id, item.id %>
-        <%= submit_tag "Get Price Data" %>
-    <% end %>
-
-<% end %>
+  </tbody>
+</table>
