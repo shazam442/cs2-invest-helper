@@ -1,13 +1,19 @@
 class TrackedItem < ApplicationRecord
   # validates string not empty for item_name
   validates :item_name, presence: true, allow_blank: false
-  validates :price_data, presence: true, allow_blank: false
 
-  def update_price_data
+  def update_price_overview_json
     response = HTTParty.get(steam_market_price_overview_url)
-    self.price_data = response.body
 
-    save
+    json = JSON.parse(response.body)
+
+    update(
+      last_request_success: json["success"],
+      lowest_price: json["lowest_price"],
+      median_price: json["median_price"],
+      volume_sold: json["volume"].to_i,
+      price_overview_json: json
+    )
   end
 
   def steam_market_price_overview_url

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_18_225640) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_21_101807) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "body"
@@ -22,6 +22,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_18_225640) do
     t.string "item_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "price_data", default: "{}", null: false
+    t.json "price_overview_json"
+    t.integer "volume_sold"
+    t.string "lowest_price"
+    t.string "median_price"
+    t.boolean "last_request_success", default: false, null: false
   end
 end

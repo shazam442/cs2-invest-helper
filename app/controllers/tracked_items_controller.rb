@@ -21,9 +21,9 @@ class TrackedItemsController < ApplicationController
   def delete
   end
 
-  def price_data
+  def price_overview_json
     @tracked_item = TrackedItem.find(params[:id])
-    @tracked_item.update_price_data
+    @tracked_item.update_price_overview_json
     redirect_to tracked_items_path, notice: "Price data updated"
   end
 
