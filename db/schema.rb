@@ -28,6 +28,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_214209) do
     t.string "median_price"
     t.boolean "last_request_success", default: false, null: false
     t.datetime "last_request_time"
-    t.integer "wear", default: 0, null: false
+    t.integer "wear", null: false
   end
 end
