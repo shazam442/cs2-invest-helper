@@ -13,8 +13,9 @@ body {
 }
 
 main {
-  height: 100vh;
+  padding: 2rem 4rem 4rem 4rem;
   background-color: #334;
+  min-height: 100vh;
 }
 
 /* Navbar styling */
@@ -63,7 +64,6 @@ input {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 2rem 0;
   background-color: #fff;
   color: #333; /* Set table text color for better contrast */
 }
@@ -105,4 +105,30 @@ th {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   text-decoration: none;
+}
+
+.tracked-item-action {
+  width: 2rem;
+  height: 2rem;
+}
+
+.color-success {
+  color: #28a745;
+}
+
+.color-danger {
+  color: #dc3545;
+}
+
+.color-primary {
+  color: #0f8ff1;
+}
+
+.color-secondary {
+  color: #6c757d;
+}
+
+.index-action {
+  width: 1.8rem;
+  aspect-ratio: 1 / 1;
 }

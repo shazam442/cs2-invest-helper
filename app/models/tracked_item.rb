@@ -12,7 +12,7 @@ class TrackedItem < ApplicationRecord
       last_request_time: Time.now,
       lowest_price: json["lowest_price"],
       median_price: json["median_price"],
-      volume_sold: json["volume"].gsub(/\D/, ""),
+      volume_sold: json["volume"]&.gsub(/\D/, ""),
       price_overview_json: json
     )
   end
