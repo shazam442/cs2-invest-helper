@@ -24,6 +24,13 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+}
+
+.page-bg-light {
+  background-color: #334;
+}
+
+.page-bg-dark {
   background-color: #1f202c;
 }
 
@@ -42,15 +49,6 @@ main {
 /* Ensure input text color is readable */
 input {
   color: #000;
-}
-
-.button {
-  background-color: bisque;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  text-decoration: none;
-  display: inline-block;
 }
 
 .index-tracked-item {
@@ -91,19 +89,40 @@ th {
   color: #fff;
 }
 
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
+.btn {
   padding: 0.5rem 1rem;
   border-radius: 5px;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #0f8ff1;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-success { 
+  /* use a green thats nice on the eyes */
+  background-color: darkgreen;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #fff;
   text-decoration: none;
 }
 
 .btn-danger {
   background-color: #dc3545;
   color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
   text-decoration: none;
 }
 
@@ -128,7 +147,41 @@ th {
   color: #6c757d;
 }
 
+.bg-success {
+  background-color: #28a745;
+}
+
+.bg-warning
+
+.bg-danger {
+  background-color: #dc3545;
+}
+
+.bg-primary {
+  background-color: #0f8ff1;
+}
+
+.bg-secondary {
+  background-color: #6c757d;
+}
+
 .index-action {
   width: 1.8rem;
   aspect-ratio: 1 / 1;
+}
+
+.tracked-item-attributes-container {
+  margin-top: 1rem;
+  font-size: larger;
+}
+
+
+/* dark bg */
+
+code {
+  background-color: #1f202c;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  padding: 1rem;
 }

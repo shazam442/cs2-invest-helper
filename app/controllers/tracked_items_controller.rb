@@ -21,8 +21,8 @@ class TrackedItemsController < ApplicationController
   end
 
   def destroy
-    @tracked_item.destroy
-    redirect_to tracked_items_path
+    @tracked_item.destroy!
+    redirect_to tracked_items_path, status: :see_other, notice: "Tracked item was successfully destroyed."
   end
 
   def price_overview_json
