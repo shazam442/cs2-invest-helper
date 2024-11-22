@@ -16,7 +16,7 @@ class TrackedItemsController < ApplicationController
     if @tracked_item.save
       redirect_to tracked_items_path, notice: "Tracked item was successfully created."
     else
-      render :new, alert: "Failed to create tracked item."
+      render :new, status: :unprocessable_entity
     end
   end
 

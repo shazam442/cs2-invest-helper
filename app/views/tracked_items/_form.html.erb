@@ -1,21 +1,18 @@
 <%= form_with(model: tracked_item) do |form| %>
   <% if tracked_item.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(tracked_item.errors.count, "error") %> prohibited this tracked_item from being saved:</h2>
-
-      <ul>
+    <div style="color: red; margin: 2rem 1rem">
+      <h3><%= pluralize(tracked_item.errors.count, "error") %> prohibited this tracked_item from being saved:</h2>
+      <ul style="margin-top: 1rem;">
         <% tracked_item.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :item_name, style: "display: block" %>
     <%= form.text_field :item_name %>
   </div>
-
   <div>
     <%= form.submit %>
   </div>

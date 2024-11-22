@@ -1,0 +1,3 @@
+<% flash.each do |key, message| %>
+  <p class="color-<%= key == "notice" ? "success" : "danger" %>"><%= message %></p>
+<% end %>
