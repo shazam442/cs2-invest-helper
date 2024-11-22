@@ -33,7 +33,7 @@ class TrackedItemsController < ApplicationController
   private
 
   def tracked_item_params
-    params.require(:tracked_item).permit(:item_name)
+    params.require(:tracked_item).permit(:name)
   end
 
   def set_tracked_item

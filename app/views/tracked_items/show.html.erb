@@ -1,4 +1,4 @@
-<h1><%= @tracked_item.item_name %></h1>
+<h1><%= @tracked_item.name %></h1>
 <hr style="margin: 1rem 0;">
 <table style="margin: 0 0 0.5rem">
   <tbody>
@@ -9,7 +9,7 @@
     <tr>
       <td>Name</td>
       <td>
-        <%= link_to @tracked_item.item_name, @tracked_item.steam_market_url, target: "blank_" %>
+        <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
         --- <%= link_to "(api)", @tracked_item.steam_market_price_overview_url, target: "blank", class: "color-secondary"%>
       </td>
     </tr>

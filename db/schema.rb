@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_104124) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_214209) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "body"
@@ -19,14 +19,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_104124) do
   end
 
   create_table "tracked_items", force: :cascade do |t|
-    t.string "item_name", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "price_overview_json"
+    t.json "price_overview_json", null: false
     t.integer "volume_sold"
     t.string "lowest_price"
     t.string "median_price"
     t.boolean "last_request_success", default: false, null: false
     t.datetime "last_request_time"
+    t.integer "wear", default: 0, null: false
   end
 end

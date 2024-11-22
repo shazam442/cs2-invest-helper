@@ -1,6 +1,9 @@
 class TrackedItem < ApplicationRecord
-  validates :item_name, presence: true, allow_blank: false
+  validates :name, presence: true, allow_blank: false
   validate :is_hash, if: -> { price_overview_json.present? }
+
+  enum wear: { no_wear: 0, factory_new: 1, minimal_wear: 2, field_tested: 3, well_worn: 4, battle_scarred: 5 }
+  validates :wear, inclusion: { in: wears.keys }
 
   def update_price_overview_json
     response = HTTParty.get(steam_market_price_overview_url)
@@ -18,11 +21,11 @@ class TrackedItem < ApplicationRecord
   end
 
   def steam_market_price_overview_url
-    BASE_STEAM_API_URL + uri_encoded_item_name
+    BASE_STEAM_API_URL + uri_encoded_name
   end
 
   def steam_market_url # parse url
-    URI::Parser.new.escape("https://steamcommunity.com/market/listings/730/#{item_name}")
+    URI::Parser.new.escape("https://steamcommunity.com/market/listings/730/#{name}")
   end
 
   private
@@ -33,8 +36,8 @@ class TrackedItem < ApplicationRecord
     errors.add(:price_overview_json, :invalid_data_type, message: "must be a hash")
   end
 
-  def uri_encoded_item_name
-    URI::Parser.new.escape(item_name).gsub("&", "%26")
+  def uri_encoded_name
+    URI::Parser.new.escape(name).gsub("&", "%26")
   end
 
   BASE_STEAM_API_URL = "https://steamcommunity.com/market/priceoverview/?country=DE&currency=3&appid=730&market_hash_name=".freeze
