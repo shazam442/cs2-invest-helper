@@ -2,7 +2,9 @@ class TrackedItemsController < ApplicationController
   before_action :set_tracked_item, only: [ :show, :destroy, :price_overview_json ]
 
   def index
-    @tracked_items = TrackedItem.order((params[:sort] || :id) => (params[:direction] || :asc))
+    @sort_direction = params[:direction] || :asc
+    @sort_column = params[:sort] || :id
+    @tracked_items = TrackedItem.order(@sort_column => @sort_direction)
   end
   def show
   end

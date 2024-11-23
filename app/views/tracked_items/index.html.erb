@@ -1,12 +1,12 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Item Name</th>
-      <th>Lowest Price</th>
-      <th>Volume Sold (24)</th>
+      <th><%= sortable_column("ID", "id") %></th>
+      <th><%= sortable_column("Name", "name") %></th>
+      <th><%= sortable_column("Lowest Price", "lowest_price") %></th>
+      <th><%= sortable_column("Volume Sold (24)", "volume_sold") %></th>
       <th>Refresh</th>
-      <th>Last Request Time</th>
+      <th><%= sortable_column("Last Request Time", "last_request_time") %></th>
       <th style="width:min-content; white-space: nowrap">Actions</th>
     </tr>
   </thead>
