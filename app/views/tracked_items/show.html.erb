@@ -1,64 +1,90 @@
-<h1 style="display: inline; margin: 0"><%= @tracked_item.name %></h1>
-<%= button_to refresh_price_overview_json_tracked_item_path(@tracked_item), method: :post, params: { redirect_to: tracked_item_path(@tracked_item) }, style: "margin: 0", class: "btn btn-primary" do %>
-  REFRESH
-<% end %>
-<hr style="margin: 1rem 0;">
-<table style="margin: 0 0 0.5rem">
-  <tbody>
-    <tr>
-      <td>ID</td>
-      <td><%= @tracked_item.id %></td>
-    </tr>
-    <tr>
-      <td>Name</td>
-      <td>
-        <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
-        --- <%= link_to "(api)", @tracked_item.steam_market_price_overview_url, target: "blank", class: "color-secondary"%>
-      </td>
-    </tr>
-    <tr>
-      <td>Volume Sold</td>
-      <td><%= @tracked_item.volume_sold %></td>
-    </tr>
-    <tr>
-      <td>Lowest Price</td>
-      <td><%= @tracked_item.lowest_price %></td>
-    </tr>
-    <tr>
-      <td>Median Price</td>
-      <td><%= @tracked_item.median_price %></td>
-    </tr>
-    <tr>
-      <td>Last Request Success</td>
-      <td><%= @tracked_item.last_request_success %></td>
-    </tr>
-    <tr>
-      <td>Last Request Time</td>
-      <td><%= time_ago_in_words(@tracked_item.last_request_time) if @tracked_item.last_request_time %></td>
-    </tr>
-    <tr>
-      <td>Created at</td>
-      <td><%= @tracked_item.created_at %></td>
-    </tr>
-    <tr>
-      <td>Updated at</td>
-      <td><%= @tracked_item.updated_at %></td>
-    </tr>
-  </tbody>
-</table>
-<div style="display: flex; justify-content: space-between; align-items: center">
-  <span>
-    <%= link_to 'Edit', edit_tracked_item_path(@tracked_item), class: "btn btn-primary" %>
-    <%= link_to "Back", tracked_items_path, class: "btn btn-secondary" %>
-  </span>
-  <span>
-    <%= button_to "Delete", tracked_item_path(@tracked_item), method: :delete, class: "btn btn-danger"%>
-  </span>
-</div>
-<pre>
+<div style="display: flex; max-width: 75rem; margin: auto; gap: 3rem">
+  <div id="left-container" class="page-bg-dark" style="width: 25%; height: auto">
+    <%= image_tag @tracked_item.image_url, class: "item-image" %>
+  </div>
+  <div
+    id="right-container"
+    class="page-bg-dark"
+    style="display: flex; gap: 1rem;
+            flex-direction: column; 
+            justify-content: space-between; 
+            align-items: flex-start;
+            width: 75%;
+            padding: 2rem">
+    <div>
+      <h1 style="display: inline; margin: 0"><%= @tracked_item.name %></h1>
+      <span class="wear-<%= @tracked_item.short_wear.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
+        <b><%= @tracked_item.short_wear %></b>
+      </div>
+      <%= button_to refresh_price_overview_json_tracked_item_path(@tracked_item), 
+        method: :post, 
+        params: { redirect_to: tracked_item_path(@tracked_item) }, 
+        style: "margin: 0", 
+        class: "btn btn-primary" do %>
+        REFRESH
+      <% end %>
+      <table style="margin: 0 0 0.5rem">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td><%= @tracked_item.id %></td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>
+              <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
+              --- <%= link_to "(api)", @tracked_item.steam_market_price_overview_url, target: "blank", class: "color-secondary"%>
+            </td>
+          </tr>
+          <tr>
+            <td>Volume Sold</td>
+            <td><%= @tracked_item.volume_sold %></td>
+          </tr>
+          <tr>
+            <td>Lowest Price</td>
+            <td><%= @tracked_item.lowest_price %></td>
+          </tr>
+          <tr>
+            <td>Median Price</td>
+            <td><%= @tracked_item.median_price %></td>
+          </tr>
+          <tr>
+            <td>Last Request Success</td>
+            <td><%= @tracked_item.last_request_success %></td>
+          </tr>
+          <tr>
+            <td>Last Request Time</td>
+            <td><%= time_ago_in_words(@tracked_item.last_request_time) if @tracked_item.last_request_time %></td>
+          </tr>
+          <tr>
+            <td>Created at</td>
+            <td><%= @tracked_item.created_at %></td>
+          </tr>
+          <tr>
+            <td>Updated at</td>
+            <td><%= @tracked_item.updated_at %></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display: flex; justify-content: space-between; 
+              align-items: center">
+        <span>
+          <%= link_to 'Edit', edit_tracked_item_path(@tracked_item), class: "btn btn-primary" %>
+          <%= link_to "Back", tracked_items_path, class: "btn btn-secondary" %>
+        </span>
+        <span>
+          <%= button_to "Delete", tracked_item_path(@tracked_item), 
+            method: :delete, 
+            class: "btn btn-danger" %>
+        </span>
+      </div>
+      <pre style="width: 100%">
     <%# add title %>
     <code style="display: block">
-<h3 style="margin: 0">Price Overview JSON</h3>
-<%= JSON.pretty_generate(@tracked_item.price_overview_json) %>
+      <h3 style="margin: 0">Price Overview JSON</h3>
+      <%= JSON.pretty_generate(@tracked_item.price_overview_json) %>
     </code>
-</pre>
+  </pre>
+    </div>
+  </div>
+</div>
