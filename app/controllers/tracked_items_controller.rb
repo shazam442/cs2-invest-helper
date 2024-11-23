@@ -1,5 +1,5 @@
 class TrackedItemsController < ApplicationController
-  before_action :set_tracked_item, only: [ :show, :destroy, :refresh_price_overview_json, :edit, :update ]
+  before_action :set_tracked_item, only: [ :show, :destroy, :refresh_price_overview, :edit, :update ]
 
   def index
     @sort_direction = params[:direction] || :asc
@@ -38,8 +38,8 @@ class TrackedItemsController < ApplicationController
     redirect_to tracked_items_path, status: :see_other, notice: "Tracked item was successfully destroyed."
   end
 
-  def refresh_price_overview_json
-    if @tracked_item.update_price_overview_json
+  def refresh_price_overview
+    if @tracked_item.update_price_overviews
       flash[:notice] = "Price overview updated successfully."
     else
       flash[:alert] = "Failed to update price overview."

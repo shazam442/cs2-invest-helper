@@ -4,33 +4,31 @@
     <a target="_blank" href="<%= item.steam_market_url %>">
       <%= item.name %>
     </a>
-    <a target="_blank" href="<%= item.steam_market_price_overview_url %>">json</a>
+    <a target="_blank" href="<%= item.steam_market_price_overview.api_url %>">json</a>
   </td>
-  <% if item.last_request_success %>
+  <% if item.steam_last_request_success %>
     <td>
-      <%= item.lowest_price %>
-      <%= (item.median_price + " median price") if !item.lowest_price && item.median_price %>
-      <%= "no data" unless item.lowest_price || item.median_price %>
+      <%= item.steam_lowest_price.to_s + "€" %>
+      <%= (item.steam_median_price.to_s + "€ median price") if !item.steam_lowest_price && item.steam_median_price %>
+      <%= "no data" unless item.steam_lowest_price || item.steam_median_price %>
     </td>
-    <td><%= item.volume_sold || "no data" %></td>
+    <td><%= item.steam_volume_sold || "no data" %></td>
   <% else %>
     <td colspan="2">no data</td>
   <% end %>
   <td>
-    <%= form_with url: refresh_price_overview_json_tracked_item_path(item), method: :post, local: true do %>
+    <%= form_with url: refresh_price_overview_tracked_item_path(item), method: :post, local: true do %>
       <%= hidden_field_tag :tracked_item_id, item.id %>
       <%= hidden_field_tag :redirect_to, tracked_items_path %>
       <%=
             submit_tag "Get Price Data",
-            class: item.last_request_success ? "btn btn-success" : "btn btn-danger"
+            class: item.steam_last_request_success ? "btn btn-success" : "btn btn-danger"
           %>
     <% end %>
   </td>
   <td>
-    <%# use readable format %>
-    <%# <%=  %>
-    <% if item.last_request_time %>
-      <%= time_ago_in_words(item.last_request_time) %> ago
+    <% if item.steam_last_request_time %>
+      <%= time_ago_in_words(item.steam_last_request_time) %> ago
     <% else %>
       <p style="color:thistle">
         unknown
@@ -54,4 +52,5 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     <% end %>
-  </tr>
+  </td>
+</tr>

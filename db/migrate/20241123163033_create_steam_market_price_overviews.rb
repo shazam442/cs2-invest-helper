@@ -1,7 +1,7 @@
 class CreateSteamMarketPriceOverviews < ActiveRecord::Migration[7.2]
   def change
     create_table :steam_market_price_overviews do |t|
-      t.references :tracked_item_id, null: false, foreign_key: true
+      t.references :tracked_item, null: false, foreign_key: true
       t.decimal :lowest_price, precision: 8, scale: 2
       t.decimal :median_price, precision: 8, scale: 2
       t.integer :volume_sold
@@ -12,8 +12,11 @@ class CreateSteamMarketPriceOverviews < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    change_table :tracked_items do |t|
-      t.remove :lowest_price, :median_price, :volume_sold, :last_request_success, :last_request_time, :price_overview_json
-    end
+    remove_column :tracked_items, :lowest_price, :decimal
+    remove_column :tracked_items, :median_price, :decimal
+    remove_column :tracked_items, :volume_sold, :integer
+    remove_column :tracked_items, :last_request_success, :boolean
+    remove_column :tracked_items, :last_request_time, :datetime
+    remove_column :tracked_items, :price_overview_json, :json
   end
 end
