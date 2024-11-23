@@ -1,5 +1,5 @@
 class TrackedItemsController < ApplicationController
-  before_action :set_tracked_item, only: [ :show, :destroy, :price_overview_json ]
+  before_action :set_tracked_item, only: [ :show, :destroy, :price_overview_json, :edit, :update ]
 
   def index
     @sort_direction = params[:direction] || :asc
@@ -22,6 +22,17 @@ class TrackedItemsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    @tracked_item.update(tracked_item_params)
+    if @tracked_item.save
+      redirect_to tracked_item_path(@tracked_item), notice: "Tracked item was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
   def destroy
     @tracked_item.destroy!
     redirect_to tracked_items_path, status: :see_other, notice: "Tracked item was successfully destroyed."

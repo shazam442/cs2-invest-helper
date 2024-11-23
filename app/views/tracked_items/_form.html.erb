@@ -1,7 +1,7 @@
 <%= form_with(model: tracked_item) do |form| %>
   <% if tracked_item.errors.any? %>
     <div style="color: red; margin: 2rem 1rem">
-      <h3><%= pluralize(tracked_item.errors.count, "error") %> prohibited this tracked_item from being saved:</h2>
+      <h3><%= pluralize(tracked_item.errors.count, "error") %> prohibited this tracked_item from being saved:</h3>
       <ul style="margin-top: 1rem;">
         <% tracked_item.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -19,7 +19,7 @@
     <%= form.select :wear, TrackedItem.wears.keys %>
   </div>
   <div style="display: flex; align-items: center; margin: 1.2rem 0">
-    <%= form.submit class: "btn btn-primary" %>
+    <%= form.submit tracked_item.new_record? ? "Create Tracked Item" : "Update Tracked Item", class: "btn btn-primary" %>
     <%= link_to 'Back', tracked_items_path, class: "btn btn-secondary", style: "margin: 0.4rem" %>
   </div>
 <% end %>
