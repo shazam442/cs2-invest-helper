@@ -1,5 +1,5 @@
 class TrackedItemsController < ApplicationController
-  before_action :set_tracked_item, only: [ :show, :destroy, :price_overview_json, :edit, :update ]
+  before_action :set_tracked_item, only: [ :show, :destroy, :refresh_price_overview_json, :edit, :update ]
 
   def index
     @sort_direction = params[:direction] || :asc
@@ -38,9 +38,16 @@ class TrackedItemsController < ApplicationController
     redirect_to tracked_items_path, status: :see_other, notice: "Tracked item was successfully destroyed."
   end
 
-  def price_overview_json
-    @tracked_item.update_price_overview_json
-    redirect_to tracked_items_path, notice: "Price data updated"
+  def refresh_price_overview_json
+    if @tracked_item.update_price_overview_json
+      flash[:notice] = "Price overview updated successfully."
+    else
+      flash[:alert] = "Failed to update price overview."
+    end
+
+    # Use the passed redirect path or default to the tracked item's show page
+    redirect_path = params[:redirect_to].presence || tracked_item_path(@tracked_item)
+    redirect_to redirect_path
   end
 
   private

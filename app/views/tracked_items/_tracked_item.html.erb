@@ -17,8 +17,9 @@
     <td colspan="2">no data</td>
   <% end %>
   <td>
-    <%= form_with url: tracked_item_price_overview_json_path(item), method: :post, local: true do %>
+    <%= form_with url: refresh_price_overview_json_tracked_item_path(item), method: :post, local: true do %>
       <%= hidden_field_tag :tracked_item_id, item.id %>
+      <%= hidden_field_tag :redirect_to, tracked_items_path %>
       <%=
             submit_tag "Get Price Data",
             class: item.last_request_success ? "btn btn-success" : "btn btn-danger"

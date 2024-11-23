@@ -1,4 +1,7 @@
-<h1><%= @tracked_item.name %></h1>
+<h1 style="display: inline; margin: 0"><%= @tracked_item.name %></h1>
+<%= button_to refresh_price_overview_json_tracked_item_path(@tracked_item), method: :post, params: { redirect_to: tracked_item_path(@tracked_item) }, style: "margin: 0", class: "btn btn-primary" do %>
+  REFRESH
+<% end %>
 <hr style="margin: 1rem 0;">
 <table style="margin: 0 0 0.5rem">
   <tbody>
@@ -31,7 +34,7 @@
     </tr>
     <tr>
       <td>Last Request Time</td>
-      <td><%= @tracked_item.last_request_time %></td>
+      <td><%= time_ago_in_words(@tracked_item.last_request_time) if @tracked_item.last_request_time %></td>
     </tr>
     <tr>
       <td>Created at</td>
@@ -49,7 +52,7 @@
     <%= link_to "Back", tracked_items_path, class: "btn btn-secondary" %>
   </span>
   <span>
-    <%= button_to "Delete", tracked_item_path(@tracked_item), method: :delet, class: "btn btn-danger"%>
+    <%= button_to "Delete", tracked_item_path(@tracked_item), method: :delete, class: "btn btn-danger"%>
   </span>
 </div>
 <pre>

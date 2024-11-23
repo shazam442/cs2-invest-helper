@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  resources :tracked_items
-  post "tracked_items/:id/price_overview_json", to: "tracked_items#price_overview_json", as: :tracked_item_price_overview_json
+  resources :tracked_items do
+    member do
+      post :refresh_price_overview_json, to: "tracked_items#refresh_price_overview_json"
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

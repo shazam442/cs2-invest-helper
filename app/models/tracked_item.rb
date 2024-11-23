@@ -17,19 +17,32 @@ class TrackedItem < ApplicationRecord
   def update_price_overview_json
     response = HTTParty.get(steam_market_price_overview_url)
 
+    unless response.success?
+      Rails.logger.error "HTTParty request failed with code #{response.code}: #{response.message}"
+      update(last_request_success: false)
+      return false
+    end
+
+
     json = JSON.parse(response.body)
 
     update(
       last_request_success: json["success"],
-      last_request_time: Time.now,
+      last_request_time: Time.current,
       lowest_price: json["lowest_price"],
       median_price: json["median_price"],
-      volume_sold: json["volume"]&.gsub(/\D/, ""),
+      volume_sold: json["volume"]&.to_s&.gsub(/\D/, "")&.to_i,
       price_overview_json: json
     )
+  rescue JSON::ParserError => e
+    Rails.logger.error "JSON parsing failed: #{e.message}"
+    update(last_request_success: false)
+    false
+  rescue StandardError => e
+    Rails.logger.error "Unexpected error in update_price_overview_json: #{e.message}"
+    update(last_request_success: false)
+    false
   end
-
-
 
   def steam_market_price_overview_url
     BASE_STEAM_API_URL + uri_encoded_market_hash_name
