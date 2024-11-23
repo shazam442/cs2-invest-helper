@@ -4,7 +4,14 @@ class TrackedItem < ApplicationRecord
   validates :name, presence: true, allow_blank: false
   validate :is_hash, if: -> { price_overview_json.present? }
 
-  enum wear: { "no_wear": 0, "Factory New": 1, "Minimal Wear": 2, "Field-Tested": 3, "Well-Worn": 4, "Battle-Scarred": 5 }, _default: "no_wear"
+  enum wear: {
+    "non_wear_item": 0,
+    "Factory New": 1,
+    "Minimal Wear": 2,
+    "Field-Tested": 3,
+    "Well-Worn": 4,
+    "Battle-Scarred": 5
+  }, _default: 0
   validates :wear, inclusion: { in: wears.keys }
 
   def update_price_overview_json
@@ -25,11 +32,16 @@ class TrackedItem < ApplicationRecord
 
 
   def steam_market_price_overview_url
-    BASE_STEAM_API_URL + uri_encoded_name
+    BASE_STEAM_API_URL + uri_encoded_market_hash_name
   end
 
-  def steam_market_url # parse url
-    URI::Parser.new.escape("https://steamcommunity.com/market/listings/730/#{name}")
+  def steam_market_url
+    "https://steamcommunity.com/market/listings/730/#{uri_encoded_market_hash_name}"
+  end
+
+  def market_hash_name
+    return name if non_wear_item?
+    "#{name} (#{wear})"
   end
 
   private
@@ -45,8 +57,8 @@ class TrackedItem < ApplicationRecord
     errors.add(:price_overview_json, :invalid_data_type, message: "must be a hash")
   end
 
-  def uri_encoded_name
-    URI::Parser.new.escape(name).gsub("&", "%26")
+  def uri_encoded_market_hash_name
+    URI::Parser.new.escape(market_hash_name).gsub("&", "%26")
   end
 
   BASE_STEAM_API_URL = "https://steamcommunity.com/market/priceoverview/?country=DE&currency=3&appid=730&market_hash_name=".freeze
