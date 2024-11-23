@@ -13,7 +13,13 @@
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
-  <div>
-    <%= form.submit %>
+  <%# choose from selection %>
+  <div style="margin: 0.7rem 0">
+    <%= form.label :wear, style: "display: block" %>
+    <%= form.select :wear, TrackedItem.wears.keys %>
+  </div>
+  <div style="display: flex; align-items: center; margin: 1.2rem 0">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to 'Back', tracked_items_path, class: "btn btn-secondary", style: "margin: 0.4rem" %>
   </div>
 <% end %>

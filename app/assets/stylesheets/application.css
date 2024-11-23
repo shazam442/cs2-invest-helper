@@ -46,10 +46,35 @@ main {
   text-decoration: none;
 }
 
+h1 {
+  margin: 1rem 0;
+}
+
 /* Ensure input text color is readable */
 input {
+  margin: 0.3rem 0;
   color: #000;
 }
+
+input[type="text"], input[type="number"] {
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+  border: 2px solid #0f8ff1;
+}
+
+input[type="submit"] {
+  margin: 0;
+  outline: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 
 .index-tracked-item {
   display: flex;
@@ -96,12 +121,15 @@ th {
 }
 
 .btn-primary {
+  height: 2rem;
   background-color: #0f8ff1;
+  border: none;
   color: #fff;
   text-decoration: none;
 }
 
 .btn-secondary {
+  height: 2rem;
   background-color: #6c757d;
   color: #fff;
   text-decoration: none;
@@ -184,4 +212,12 @@ code {
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
   padding: 1rem;
+}
+
+select {
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
 }

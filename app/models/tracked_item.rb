@@ -1,4 +1,6 @@
 class TrackedItem < ApplicationRecord
+  after_initialize :set_defaults
+
   validates :name, presence: true, allow_blank: false
   validate :is_hash, if: -> { price_overview_json.present? }
 
@@ -31,6 +33,11 @@ class TrackedItem < ApplicationRecord
   end
 
   private
+
+  def set_defaults
+    self.price_overview_json ||= {}
+    self.last_request_success false if last_request_success.nil?
+  end
 
   def is_hash
     return if price_overview_json.is_a?(Hash)

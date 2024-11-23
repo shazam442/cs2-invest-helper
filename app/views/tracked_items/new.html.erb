@@ -1,6 +1,3 @@
 <%= content_for :title, "New Tracked Item"  %>
 <h1>New Tracked Item</h1>
 <%= render 'form', tracked_item: @tracked_item %>
-<div style="margin-top: 2rem;">
-  <%= link_to 'Back', tracked_items_path, class: "button" %>
-</div>
