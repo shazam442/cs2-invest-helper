@@ -33,7 +33,7 @@
             <td>Name</td>
             <td>
               <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
-              --- <%= link_to "(api)", @tracked_item.steam_market_price_overview.api_url, target: "blank", class: "color-secondary"%>
+              --- <%= link_to "(api)", SteamAPIService.price_overview_endpoint(@tracked_item), target: "blank", class: "color-secondary"%>
             </td>
           </tr>
           <tr>

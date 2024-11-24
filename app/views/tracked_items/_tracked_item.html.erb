@@ -4,7 +4,7 @@
     <a target="_blank" href="<%= item.steam_market_url %>">
       <%= item.name %>
     </a>
-    <a target="_blank" href="<%= item.steam_market_price_overview&.api_url %>">json</a>
+    <a target="_blank" href="<%= SteamAPIService.price_overview_endpoint(item) %>">json</a>
   </td>
   <% if item.steam_market_price_overview.last_request_success %>
     <td>

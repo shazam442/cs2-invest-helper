@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_23_184058) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_111517) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "body"
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_23_184058) do
     t.json "last_request_response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "last_request_response_code"
     t.index ["tracked_item_id"], name: "index_steam_market_price_overviews_on_tracked_item_id"
   end
 
