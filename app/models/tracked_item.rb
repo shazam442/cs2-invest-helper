@@ -1,8 +1,6 @@
 class TrackedItem < ApplicationRecord
   has_one :steam_market_price_overview, dependent: :destroy
 
-  before_create :build_steam_market_price_overview
-
   enum wear: {
     "non_wear_item": 0,
     "Factory New": 1,
@@ -14,9 +12,7 @@ class TrackedItem < ApplicationRecord
 
     validates :wear, inclusion: { in: wears.keys }
     validates :name, presence: true, allow_blank: false
-    validates :steam_market_price_overview, presence: true
-
-    delegate :lowest_price, :median_price, :volume_sold, :last_request_success, :last_request_time, :last_request_response, to: :steam_market_price_overview, prefix: :steam
+    validates_associated :steam_market_price_overview, presence: true
 
   def update_price_overviews
     steam_market_price_overview.fetch_steam_api_data
@@ -35,18 +31,13 @@ class TrackedItem < ApplicationRecord
   end
 
   def short_wear
-    case wear
-    when "Factory New"
-      "FN"
-    when "Minimal Wear"
-      "MW"
-    when "Field-Tested"
-      "FT"
-    when "Well-Worn"
-      "WW"
-    when "Battle-Scarred"
-      "BS"
-    end
+    {
+      "Factory New" => "FN",
+      "Minimal Wear" => "MW",
+      "Field-Tested" => "FT",
+      "Well-Worn" => "WW",
+      "Battle-Scarred" => "BS"
+    }[wear]
   end
 
   def market_hash_name

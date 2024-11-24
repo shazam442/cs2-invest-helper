@@ -15,6 +15,8 @@ class TrackedItemsController < ApplicationController
 
   def create
     @tracked_item = TrackedItem.new(tracked_item_params)
+    @tracked_item.build_steam_market_price_overview
+
     if @tracked_item.save
       redirect_to tracked_items_path, notice: "Tracked item was successfully created."
     else
@@ -26,8 +28,7 @@ class TrackedItemsController < ApplicationController
   end
 
   def update
-    @tracked_item.update(tracked_item_params)
-    if @tracked_item.save
+    if @tracked_item.update(tracked_item_params)
       redirect_to tracked_item_path(@tracked_item), notice: "Tracked item was successfully updated."
     else
       render :edit, status: :unprocessable_entity
