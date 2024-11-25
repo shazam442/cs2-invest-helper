@@ -14,9 +14,8 @@ class SteamAPIService
       Rails.logger.error "price_overview_endpoint request failed with code #{response.code}: #{response.message}"
       return {
         last_request_success: false,
-        response_code: response.code,
-        response_message: response.message,
-        info: "A 500 Internal Server Error can be the result of a bad market_hash_name"
+        last_request_response: JSON.parse(response.body),
+        last_request_response_code: response.code
       }
     end
 

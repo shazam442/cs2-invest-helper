@@ -4,13 +4,20 @@ class SteamMarketPriceOverview < ApplicationRecord
   attribute :last_request_success, :boolean, default: false
   attribute :last_request_response, :json, default: {}
 
-  after_create :fetch_steam_api_data
+  after_create :sync_price_overview
 
   validates :tracked_item, presence: true
   validate :last_request_response_is_hash, if: -> { last_request_response.present? }
 
   def api_url
     BASE_STEAM_API_URL + tracked_item.uri_encoded_market_hash_name
+  end
+
+  def sync_price_overview
+    steam_api = SteamAPIService.new(tracked_item)
+    data = steam_api.fetch_steam_market_price_overview
+
+    update(data)
   end
 
   private

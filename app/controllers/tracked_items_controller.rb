@@ -40,17 +40,16 @@ class TrackedItemsController < ApplicationController
   end
 
   def sync_price_overview
-    redirect_path = params[:redirect_to].presence || tracked_item_path(@tracked_item)
+    record_updated = @tracked_item.steam_market_price_overview.sync_price_overview
+    request_succeeded = record_updated && @tracked_item.steam_market_price_overview.last_request_success
 
-    steam_api = SteamAPIService.new(@tracked_item)
-    data = steam_api.fetch_steam_market_price_overview
+    sync_request_response_code = @tracked_item.steam_market_price_overview.last_request_response_code
+    sync_request_response = @tracked_item.steam_market_price_overview.last_request_response
 
-    return handle_failed_sync_request(data, redirect_path) unless data[:last_request_success]
+    flash.notice = "Price Overview sync succeeded" if request_succeeded
+    flash.alert = "Failed to update price overview: #{sync_request_response} (#{sync_request_response_code})" if not request_succeeded
 
-    updated = @tracked_item.steam_market_price_overview.update(data)
-
-    redirect_to redirect_path, notice: "Price overview updated successfully." if updated
-    redirect_to redirect_path, status: :unprocessable_entity, alert: "Failed to update price overview." unless updated
+    redirect_to request.referer
   end
 
   private
@@ -62,10 +61,5 @@ class TrackedItemsController < ApplicationController
   def set_tracked_item
     @tracked_item = TrackedItem.find_by(id: params[:id])
     redirect_to tracked_items_path, alert: "TrackedItem not found." unless @tracked_item
-  end
-
-  def handle_failed_sync_request(data, redirect_path)
-    flash[:alert] = "Failed to update price overview: #{data[:response_code]} #{data[:response_message]}\nInfo: #{data[:info]}"
-    redirect_to redirect_path, status: :unprocessable_entity
   end
 end

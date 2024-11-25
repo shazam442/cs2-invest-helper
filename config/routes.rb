@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :tracked_items do
     member do
-      post :refresh_price_overview
+      post :sync_price_overview
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

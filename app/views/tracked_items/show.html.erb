@@ -16,9 +16,8 @@
       <span class="wear-<%= @tracked_item.short_wear.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
         <b><%= @tracked_item.short_wear %></b>
       </div>
-      <%= button_to refresh_price_overview_tracked_item_path(@tracked_item), 
+      <%= button_to sync_price_overview_tracked_item_path(@tracked_item), 
         method: :post, 
-        params: { redirect_to: tracked_item_path(@tracked_item) }, 
         style: "margin: 0", 
         class: "btn btn-primary" do %>
         REFRESH
