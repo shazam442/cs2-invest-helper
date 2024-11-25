@@ -35,13 +35,5 @@ class SteamAPIService
       last_request_response_code: response.code,
       last_request_time: Time.current
     }
-  rescue JSON::ParserError => e
-    Rails.logger.error "JSON parsing failed: #{e.message}"
-    update(last_request_success: false)
-    false
-  rescue StandardError => e
-    Rails.logger.error "Unexpected error in SteamMarketPriceOverview.update: #{e.message}"
-    update(last_request_success: false)
-    false
   end
 end
