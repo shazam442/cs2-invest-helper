@@ -1,3 +1,13 @@
+:root {
+  --primary-color: #0f8ff1;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-bg: #334;
+  --dark-bg: #1f202c;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -9,7 +19,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #334;
+  background-color: var(--light-bg);
   color: #fff;
 }
 
@@ -39,7 +49,7 @@ main {
 }
 
 .navbar-button {
-  background-color: #0f8ff1;
+  background-color: var(--primary-color);
   color: #000;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -65,7 +75,7 @@ input[type="number"] {
 
 input[type="text"]:focus,
 input[type="number"]:focus {
-  border: 2px solid #0f8ff1;
+  border: 2px solid var(--primary-color);
 }
 
 input[type="submit"] {
@@ -82,7 +92,7 @@ input[type="submit"] {
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--dark-bg);
 }
 
 /* Table styling */
@@ -126,7 +136,7 @@ th {
 
 .btn-primary {
   height: 2rem;
-  background-color: #0f8ff1;
+  background-color: var(--primary-color);
   border: none;
   color: #fff;
   text-decoration: none;
@@ -134,14 +144,13 @@ th {
 
 .btn-secondary {
   height: 2rem;
-  background-color: #6c757d;
+  background-color: var(--secondary-color);
   color: #fff;
   text-decoration: none;
 }
 
 .btn-success {
-  /* use a green thats nice on the eyes */
-  background-color: darkgreen;
+  background-color: var(--success-color);
   color: #fff;
   text-decoration: none;
 }
@@ -164,39 +173,39 @@ th {
 }
 
 .color-success {
-  color: #28a745;
+  color: var(--success-color);
 }
 
 .color-danger {
-  color: #dc3545;
+  color: var(--danger-color);
 }
 
 .color-warning {
-  color: #ffc107;
+  color: var(--warning-color);
 }
 
 .color-primary {
-  color: #0f8ff1;
+  color: var(--primary-color);
 }
 
 .color-secondary {
-  color: #6c757d;
+  color: var(--secondary-color);
 }
 
 .bg-success {
-  background-color: #28a745;
+  background-color: var(--success-color);
 }
 
 .bg-warning {
-  background-color: #ffc107;
+  background-color: var(--warning-color);
 }
 
 .bg-danger {
-  background-color: #dc3545;
+  background-color: var(--danger-color);
 }
 
 .bg-primary {
-  background-color: #0f8ff1;
+  background-color: var(--primary-color);
 }
 
 .bg-secondary {
@@ -217,7 +226,7 @@ th {
 /* dark bg */
 
 code {
-  background-color: #1f202c;
+  background-color: var(--dark-bg);
   color: #fff;
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
@@ -258,4 +267,48 @@ select {
 
 .wear-bs {
   color: #ff3333;
+}
+.market-price-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  width: -webkit-fill-available;
+  gap: 0.5rem;
+}
+
+.market-price {
+  background-color: var(--light-bg);
+  list-style: none;
+  padding: 0.5rem 1rem;
+  display: inline-flex;
+  width: 100%;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;	
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  border-radius: 0.4rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.market-price::after {
+  margin-left: 0.2rem;
+  content: '€';
+}
+
+.market-price:hover {
+  transform: skew(1deg) scale(1.03);
+  filter: brightness(1.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+#show-page-left-container {
+  width: 25%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,9 +1,23 @@
 <div style="display: flex; max-width: 75rem; margin: auto; gap: 3rem">
-  <div id="left-container" class="page-bg-dark" style="width: 25%; height: auto">
+  <div id="show-page-left-container" class="page-bg-dark">
     <%= image_tag @tracked_item.image_url, class: "item-image" %>
+    <div class="market-price-container">
+      <div class="market-price">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        <%= @tracked_item.steam_market_price_overview.lowest_price %>
+      </div>
+      <div class="market-price">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        Skinport Price
+      </div>
+      <div class="market-price">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        Skinbaron Price
+      </div>
+    </div>
   </div>
   <div
-    id="right-container"
+    id="show-page-right-container"
     class="page-bg-dark"
     style="display: flex; gap: 1rem;
             flex-direction: column; 
