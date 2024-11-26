@@ -14,7 +14,7 @@ class SteamListing < ApplicationRecord
   def image_url = "https://api.steamapis.com/image/item/730/#{uri_encoded_market_hash_name}"
 
   def sync_price_overview
-    data = SteamAPIService.fetch_price_overview(tracked_item)
+    data = SteamAPIAccessor.fetch_price_overview(tracked_item)
 
     update(data)
   end
