@@ -48,7 +48,8 @@ class TrackedItemsController < ApplicationController
     sync_request_response = @tracked_item.steam_listing.last_request_response
 
     flash.notice = "Price Overview sync succeeded" if request_succeeded
-    flash.alert = "Failed to update price overview: #{sync_request_response} (#{sync_request_response_code})" if not request_succeeded
+    flash.alert = "Failed request for: '#{@tracked_item.market_hash_name}'\n
+      Response: #{sync_request_response} (#{sync_request_response_code})" if not request_succeeded
 
     redirect_to request.referer
   end
