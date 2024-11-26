@@ -1,14 +1,10 @@
-class SteamAPIService
-  def initialize(tracked_item)
-    @tracked_item = tracked_item
-  end
+module SteamAPIService
+  extend self
 
-  def self.price_overview_endpoint(tracked_item)
-    "https://steamcommunity.com/market/priceoverview/?currency=3&appid=730&market_hash_name=#{tracked_item.uri_encoded_market_hash_name}"
-  end
+  def price_overview_endpoint(tracked_item) = tracked_item.steam_price_overview_url
 
-  def fetch_steam_market_price_overview
-    response = HTTParty.get(self.class.price_overview_endpoint(@tracked_item))
+  def fetch_price_overview(tracked_item)
+    response = HTTParty.get(price_overview_endpoint(tracked_item))
 
     unless response.success?
       Rails.logger.error "price_overview_endpoint request failed with code #{response.code}: #{response.message}"

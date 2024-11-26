@@ -1,18 +1,18 @@
 <tr>
   <td><%= item.id %></td>
   <td>
-    <a target="_blank" href="<%= item.steam_market_url %>">
+    <a target="_blank" href="<%= item.steam_url %>">
       <%= item.name %>
     </a>
-    <a target="_blank" href="<%= SteamAPIService.price_overview_endpoint(item) %>">json</a>
+    <a target="_blank" href="<%= item.steam_listing.price_overview_url %>">json</a>
   </td>
-  <% if item.steam_market_price_overview.last_request_success %>
+  <% if item.steam_listing.last_request_success %>
     <td>
-      <%= item.steam_market_price_overview.lowest_price.to_s + "€" %>
-      <%= (item.steam_market_price_overview.median_price.to_s + "€ median price") if !item.steam_market_price_overview.lowest_price && item.steam_market_price_overview.median_price %>
-      <%= "no data" unless item.steam_market_price_overview.lowest_price || item.steam_market_price_overview.median_price %>
+      <%= item.steam_listing.lowest_price.to_s + "€" %>
+      <%= (item.steam_listing.median_price.to_s + "€ median price") if !item.steam_listing.lowest_price && item.steam_listing.median_price %>
+      <%= "no data" unless item.steam_listing.lowest_price || item.steam_listing.median_price %>
     </td>
-    <td><%= item.steam_market_price_overview.volume_sold || "no data" %></td>
+    <td><%= item.steam_listing.volume_sold || "no data" %></td>
   <% else %>
     <td colspan="2">no data</td>
   <% end %>
@@ -21,13 +21,13 @@
       <%= hidden_field_tag :tracked_item_id, item.id %>
       <%=
             submit_tag "Get Price Data",
-            class: item.steam_market_price_overview.last_request_success ? "btn btn-success" : "btn btn-danger"
+            class: item.steam_listing.last_request_success ? "btn btn-success" : "btn btn-danger"
           %>
     <% end %>
   </td>
   <td>
-    <% if item.steam_market_price_overview.last_request_time %>
-      <%= time_ago_in_words(item.steam_market_price_overview.last_request_time) %> ago
+    <% if item.steam_listing.last_request_time %>
+      <%= time_ago_in_words(item.steam_listing.last_request_time) %> ago
     <% else %>
       <p style="color:thistle">
         unknown

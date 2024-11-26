@@ -4,7 +4,7 @@
     <div class="market-price-container">
       <div class="market-price">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
-        <%= @tracked_item.steam_market_price_overview.lowest_price %>
+        <%= @tracked_item.steam_listing.lowest_price %>
       </div>
       <div class="market-price">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
@@ -45,29 +45,29 @@
           <tr>
             <td>Name</td>
             <td>
-              <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
-              --- <%= link_to "(api)", SteamAPIService.price_overview_endpoint(@tracked_item), target: "blank", class: "color-secondary"%>
+              <%= link_to @tracked_item.name, @tracked_item.steam_url, target: "blank_" %>
+              --- <%= link_to "(api)", @tracked_item.steam_listing.price_overview_url, target: "blank", class: "color-secondary"%>
             </td>
           </tr>
           <tr>
             <td>Volume Sold</td>
-            <td><%= @tracked_item.steam_market_price_overview.volume_sold %></td>
+            <td><%= @tracked_item.steam_listing.volume_sold %></td>
           </tr>
           <tr>
             <td>Lowest Price</td>
-            <td><%= @tracked_item.steam_market_price_overview.lowest_price %></td>
+            <td><%= @tracked_item.steam_listing.lowest_price %></td>
           </tr>
           <tr>
             <td>Median Price</td>
-            <td><%= @tracked_item.steam_market_price_overview.median_price %></td>
+            <td><%= @tracked_item.steam_listing.median_price %></td>
           </tr>
           <tr>
             <td>Last Request Success</td>
-            <td><%= @tracked_item.steam_market_price_overview.last_request_success %></td>
+            <td><%= @tracked_item.steam_listing.last_request_success %></td>
           </tr>
           <tr>
             <td>Last Request Time</td>
-            <td><%= time_ago_in_words(@tracked_item.steam_market_price_overview.last_request_time) if @tracked_item.steam_market_price_overview.last_request_time %></td>
+            <td><%= time_ago_in_words(@tracked_item.steam_listing.last_request_time) if @tracked_item.steam_listing.last_request_time %></td>
           </tr>
           <tr>
             <td>Created at</td>
@@ -94,7 +94,7 @@
       <pre style="width: 100%">
     <code style="display: block">
       <h3 style="margin: 0">Response to last Steam API request</h3>
-      <%= JSON.pretty_generate(@tracked_item.steam_market_price_overview.last_request_response) %>
+      <%= JSON.pretty_generate(@tracked_item.steam_listing.last_request_response) %>
     </code>
   </pre>
     </div>

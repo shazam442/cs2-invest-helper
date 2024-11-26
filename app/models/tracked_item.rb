@@ -1,5 +1,5 @@
 class TrackedItem < ApplicationRecord
-  has_one :steam_market_price_overview, dependent: :destroy
+  has_one :steam_listing, dependent: :destroy
 
   enum :wear, "non_wear_item": 0,
     "Factory New": 1,
@@ -10,15 +10,11 @@ class TrackedItem < ApplicationRecord
 
     validates :wear, inclusion: { in: wears.keys }
     validates :name, presence: true, allow_blank: false
-    validates_associated :steam_market_price_overview, presence: true
+    validates_associated :steam_listing, presence: true
 
-  def steam_market_url
-    "https://steamcommunity.com/market/listings/730/#{uri_encoded_market_hash_name}"
-  end
-
-  def image_url
-    "https://api.steamapis.com/image/item/730/#{uri_encoded_market_hash_name}"
-  end
+  def steam_url = steam_listing.url
+  def steam_price_overview_url = steam_listing.price_overview_url
+  def image_url = steam_listing.image_url
 
   def short_wear
     {
@@ -33,9 +29,5 @@ class TrackedItem < ApplicationRecord
   def market_hash_name
     return name if non_wear_item?
     "#{name} (#{wear})"
-  end
-
-  def uri_encoded_market_hash_name
-    URI.encode_uri_component(market_hash_name)
   end
 end

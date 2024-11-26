@@ -15,7 +15,7 @@ class TrackedItemsController < ApplicationController
 
   def create
     @tracked_item = TrackedItem.new(tracked_item_params)
-    @tracked_item.build_steam_market_price_overview
+    @tracked_item.build_steam_listing
 
     if @tracked_item.save
       redirect_to tracked_items_path, notice: "Tracked item was successfully created."
@@ -40,11 +40,11 @@ class TrackedItemsController < ApplicationController
   end
 
   def sync_price_overview
-    record_updated = @tracked_item.steam_market_price_overview.sync_price_overview
-    request_succeeded = record_updated && @tracked_item.steam_market_price_overview.last_request_success
+    record_updated = @tracked_item.steam_listing.sync_price_overview
+    request_succeeded = record_updated && @tracked_item.steam_listing.last_request_success
 
-    sync_request_response_code = @tracked_item.steam_market_price_overview.last_request_response_code
-    sync_request_response = @tracked_item.steam_market_price_overview.last_request_response
+    sync_request_response_code = @tracked_item.steam_listing.last_request_response_code
+    sync_request_response = @tracked_item.steam_listing.last_request_response
 
     flash.notice = "Price Overview sync succeeded" if request_succeeded
     flash.alert = "Failed to update price overview: #{sync_request_response} (#{sync_request_response_code})" if not request_succeeded

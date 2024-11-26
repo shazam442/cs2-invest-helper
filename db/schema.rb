@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_24_111517) do
-  create_table "steam_market_price_overviews", force: :cascade do |t|
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_110332) do
+  create_table "steam_listings", force: :cascade do |t|
     t.integer "tracked_item_id", null: false
     t.decimal "lowest_price", precision: 8, scale: 2
     t.decimal "median_price", precision: 8, scale: 2
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_111517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "last_request_response_code"
-    t.index ["tracked_item_id"], name: "index_steam_market_price_overviews_on_tracked_item_id"
+    t.index ["tracked_item_id"], name: "index_steam_listings_on_tracked_item_id"
   end
 
   create_table "tracked_items", force: :cascade do |t|
@@ -32,5 +32,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_111517) do
     t.integer "wear", null: false
   end
 
-  add_foreign_key "steam_market_price_overviews", "tracked_items"
+  add_foreign_key "steam_listings", "tracked_items"
 end
