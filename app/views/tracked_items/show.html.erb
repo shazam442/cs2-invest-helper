@@ -27,8 +27,8 @@
             padding: 2rem">
     <div>
       <h1 style="display: inline; margin: 0"><%= @tracked_item.name %></h1>
-      <span class="wear-<%= @tracked_item.short_wear.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
-        <b><%= @tracked_item.short_wear %></b>
+      <span class="wear-<%= @tracked_item.wear_name_short.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
+        <b><%= @tracked_item.wear_name_short %></b>
       </div>
       <%= button_to sync_price_overview_tracked_item_path(@tracked_item), 
         method: :post, 
