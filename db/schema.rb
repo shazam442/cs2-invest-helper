@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_27_154736) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_174222) do
   create_table "api_requests", force: :cascade do |t|
-    t.integer "target_market", null: false
+    t.integer "market", null: false
     t.string "target_url", null: false
     t.boolean "success", default: false, null: false
     t.json "response_body"
@@ -33,10 +33,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_27_154736) do
     t.integer "quantity"
     t.datetime "posted_on_market_at"
     t.datetime "edited_on_market_at"
-    t.datetime "last_request_time"
-    t.datetime "last_request_success"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "item_page"
+    t.string "market_page"
     t.index ["tracked_item_id"], name: "index_skinport_listings_on_tracked_item_id"
   end
 
