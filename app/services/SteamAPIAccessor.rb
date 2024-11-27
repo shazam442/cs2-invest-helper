@@ -1,13 +1,13 @@
 module SteamAPIService
   extend self
 
-  def price_overview_endpoint(tracked_item) = tracked_item.steam_price_overview_url
+  def get_price_overview_url_for(tracked_item) = tracked_item.steam_price_overview_url
 
   def fetch_price_overview(tracked_item)
-    response = HTTParty.get(price_overview_endpoint(tracked_item))
+    response = HTTParty.get(get_price_overview_url_for(tracked_item))
 
     unless response.success?
-      Rails.logger.error "price_overview_endpoint request failed with code #{response.code}: #{response.message}"
+      Rails.logger.error "get_price_overview_url_for request failed with code #{response.code}: #{response.message}"
       return {
         last_request_success: false,
         last_request_response: JSON.parse(response.body),

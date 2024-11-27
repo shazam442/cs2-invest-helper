@@ -17,6 +17,7 @@ class TrackedItemsController < ApplicationController
   def create
     @tracked_item = TrackedItem.new(tracked_item_params)
     @tracked_item.build_steam_listing
+    @tracked_item.build_skinport_listing
 
     if @tracked_item.save
       redirect_to tracked_items_path, notice: "Tracked item was successfully created."

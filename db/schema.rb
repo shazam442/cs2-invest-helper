@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_110332) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_27_154736) do
+  create_table "api_requests", force: :cascade do |t|
+    t.integer "target_market", null: false
+    t.string "target_url", null: false
+    t.boolean "success", default: false, null: false
+    t.json "response_body"
+    t.integer "response_code"
+    t.json "request_body", default: {}, null: false
+    t.datetime "request_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "skinport_listings", force: :cascade do |t|
+    t.integer "tracked_item_id", null: false
+    t.decimal "min_price"
+    t.decimal "max_price"
+    t.decimal "mean_price"
+    t.decimal "median_price"
+    t.decimal "suggested_price"
+    t.integer "quantity"
+    t.datetime "posted_on_market_at"
+    t.datetime "edited_on_market_at"
+    t.datetime "last_request_time"
+    t.datetime "last_request_success"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tracked_item_id"], name: "index_skinport_listings_on_tracked_item_id"
+  end
+
   create_table "steam_listings", force: :cascade do |t|
     t.integer "tracked_item_id", null: false
     t.decimal "lowest_price", precision: 8, scale: 2
@@ -30,7 +59,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_110332) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "wear", null: false
+    t.boolean "stattrak", default: false, null: false
+    t.boolean "souvenir", default: false, null: false
   end
 
+  add_foreign_key "skinport_listings", "tracked_items"
   add_foreign_key "steam_listings", "tracked_items"
 end
