@@ -17,7 +17,7 @@
     <td colspan="2">no data</td>
   <% end %>
   <td>
-    <%= form_with url: sync_price_overview_tracked_item_path(item), method: :post, local: true do %>
+    <%= form_with url: trigger_price_sync_tracked_item_path(item), method: :post, local: true do %>
       <%= hidden_field_tag :tracked_item_id, item.id %>
       <%=
             submit_tag "Get Price Data",

@@ -1,5 +1,5 @@
 class TrackedItemsController < ApplicationController
-  before_action :set_tracked_item, only: [ :show, :destroy, :sync_price_overview, :edit, :update ]
+  before_action :set_tracked_item, only: [ :show, :destroy, :trigger_price_sync, :edit, :update ]
   before_action :set_wear_options, only: [ :new, :edit, :create, :update ]
 
   def index
@@ -8,6 +8,7 @@ class TrackedItemsController < ApplicationController
     @tracked_items = TrackedItem.order(@sort_column => @sort_direction)
   end
   def show
+    console
   end
 
   def new
@@ -41,16 +42,23 @@ class TrackedItemsController < ApplicationController
     redirect_to tracked_items_path, status: :see_other, notice: "Tracked item was successfully destroyed."
   end
 
-  def sync_price_overview
-    record_updated = @tracked_item.steam_listing.sync_price_overview
-    request_succeeded = record_updated && @tracked_item.steam_listing.last_request_success
+  def trigger_price_sync
+    raise "Steam sync needs to be implemented (start with creation of SteamListingSyncService which should call SteamApiService and update listing)" unless @tracked_item.steam_listing
 
-    sync_request_response_code = @tracked_item.steam_listing.last_request_response_code
-    sync_request_response = @tracked_item.steam_listing.last_request_response
 
-    flash.notice = "Price Overview sync succeeded" if request_succeeded
-    flash.alert = "Failed request for: '#{@tracked_item.market_hash_name}'\n
-      Response: #{sync_request_response} (#{sync_request_response_code})" if not request_succeeded
+    skinport_synced = SkinportListingSyncService.new(@tracked_item).sync
+
+    notices = []
+    alerts = []
+
+    notices << "Skinport synced" unless not skinport_synced
+    alerts << "Skinport not synced -- next sync possible in #{ApiRequest.seconds_until_next_skinport_request} seconds" if not skinport_synced
+
+    notices << "Steam synced" unless not steam_synced
+    alerts << "Steam not synced" if not steam_synced
+
+    flash.notice = notices.join("\n") if notices.any?
+    flash.alert = alerts.join("\n") if alerts.any?
 
     redirect_to request.referer
   end

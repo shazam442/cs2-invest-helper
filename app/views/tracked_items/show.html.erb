@@ -30,7 +30,7 @@
       <span class="wear-<%= @tracked_item.wear_name_short.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
         <b><%= @tracked_item.wear_name_short %></b>
       </div>
-      <%= button_to sync_price_overview_tracked_item_path(@tracked_item), 
+      <%= button_to trigger_price_sync_tracked_item_path(@tracked_item), 
         method: :post, 
         style: "margin: 0", 
         class: "btn btn-primary" do %>

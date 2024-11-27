@@ -4,7 +4,7 @@ class SteamListing < ApplicationRecord
   attribute :last_request_success, :boolean, default: false
   attribute :last_request_response, :json, default: {}
 
-  after_create :sync_price_overview
+  after_create :sync_price
 
   validates :tracked_item, presence: true
   validate :last_request_response_is_hash, if: -> { last_request_response.present? }
@@ -13,8 +13,8 @@ class SteamListing < ApplicationRecord
   def price_overview_url = "https://steamcommunity.com/market/priceoverview/?currency=3&appid=730&market_hash_name=#{uri_encoded_market_hash_name}"
   def image_url = "https://api.steamapis.com/image/item/730/#{uri_encoded_market_hash_name}"
 
-  def sync_price_overview
-    data = SteamAPIAccessor.fetch_price_overview(tracked_item)
+  def sync_price
+    data = SteamAPIService.fetch_price_overview(tracked_item)
 
     update(data)
   end
