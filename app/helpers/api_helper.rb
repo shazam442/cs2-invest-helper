@@ -20,6 +20,15 @@ module ApiHelper
     File.join(Dir.pwd, "app/services/markets/skinport_items_response.json")
   end
 
+  def market_url_for_listing(listing)
+    case listing.market_name
+    when "steam"
+      steam_market_url(listing.tracked_item)
+    when "skinport"
+      listing.market_page
+    end
+  end
+
   def to_json_file(json_data, file_path)
     File.open(file_path, "w") do |file|
       file.write(JSON.pretty_generate(json_data))

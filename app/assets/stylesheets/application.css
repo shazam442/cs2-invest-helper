@@ -318,3 +318,32 @@ select {
   flex-direction: column;
   align-items: center;
 }
+
+#show-page-right-container{
+  position: relative;
+}
+
+#min-price {
+  color: var(--success-color);
+  font-size: 1.5rem;
+  display: flex;
+  width: fit-content;
+  gap: 1rem;
+  align-items: center;
+  padding: 0rem 1.5rem;
+  background-color: var(--light-bg);
+  border-radius: 1.6rem;
+  transition: transform 0.1s;
+}
+
+#min-price:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+  border: .1rem solid var(--success-color);
+}
+
+.big-price-display-icon {
+  transform: scale(0.6);
+  width: 3rem;
+  height: inherit;
+}

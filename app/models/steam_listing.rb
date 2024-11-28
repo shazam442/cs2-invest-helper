@@ -6,4 +6,6 @@ class SteamListing < ApplicationRecord
   validates :tracked_item, presence: true
 
   delegate :uri_encoded_market_hash_name, to: :tracked_item
+
+  def market_name = "steam".freeze
 end
