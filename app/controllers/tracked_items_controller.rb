@@ -8,7 +8,6 @@ class TrackedItemsController < ApplicationController
     @tracked_items = TrackedItem.order(@sort_column => @sort_direction)
   end
   def show
-    console
   end
 
   def new
@@ -43,19 +42,17 @@ class TrackedItemsController < ApplicationController
   end
 
   def trigger_price_sync
-    raise "Steam sync needs to be implemented (start with creation of SteamListingSyncService which should call SteamApiService and update listing)" unless @tracked_item.steam_listing
-
-
-    skinport_synced = SkinportListingSyncService.new(@tracked_item).sync
+    steam_sync_succeeded = SteamListingSyncService.new(@tracked_item).sync
+    skinport_sync_succeeded = SkinportListingSyncService.new(@tracked_item).sync
 
     notices = []
     alerts = []
 
-    notices << "Skinport synced" unless not skinport_synced
-    alerts << "Skinport not synced -- next sync possible in #{ApiRequest.seconds_until_next_skinport_request} seconds" if not skinport_synced
+    notices << "Skinport synced" unless not skinport_sync_succeeded
+    alerts << "Using cached data for Skinport -- next sync possible in #{ApiRequest.seconds_until_next_skinport_request} seconds" if not skinport_sync_succeeded
 
-    notices << "Steam synced" unless not steam_synced
-    alerts << "Steam not synced" if not steam_synced
+    notices << "Steam synced" unless not steam_sync_succeeded
+    alerts << "Steam not synced" if not steam_sync_succeeded
 
     flash.notice = notices.join("\n") if notices.any?
     flash.alert = alerts.join("\n") if alerts.any?

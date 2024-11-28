@@ -4,33 +4,33 @@
     <a target="_blank" href="<%= item.steam_url %>">
       <%= item.name %>
     </a>
-    <a target="_blank" href="<%= item.steam_listing.price_overview_url %>">json</a>
+    <a target="_blank" href="<%= item.steam_api_url %>">json</a>
   </td>
-  <% if item.steam_listing.last_request_success %>
+  <% if item.last_steam_request&.success %>
     <td>
-      <%= item.steam_listing.lowest_price.to_s + "€" %>
-      <%= (item.steam_listing.median_price.to_s + "€ median price") if !item.steam_listing.lowest_price && item.steam_listing.median_price %>
-      <%= "no data" unless item.steam_listing.lowest_price || item.steam_listing.median_price %>
+      <%= item.steam_listing.min_price.to_s + "€" %>
+      <%= (item.steam_listing.median_price.to_s + "€ median price") if !item.steam_listing.min_price && item.steam_listing.median_price %>
+      <%= "no data" unless item.steam_listing.min_price || item.steam_listing.median_price %>
     </td>
     <td><%= item.steam_listing.volume_sold || "no data" %></td>
   <% else %>
-    <td colspan="2">no data</td>
+    <td colspan="2">N/A</td>
   <% end %>
   <td>
     <%= form_with url: trigger_price_sync_tracked_item_path(item), method: :post, local: true do %>
       <%= hidden_field_tag :tracked_item_id, item.id %>
       <%=
             submit_tag "Get Price Data",
-            class: item.steam_listing.last_request_success ? "btn btn-success" : "btn btn-danger"
+            class: item.last_steam_request&.success ? "btn btn-success" : "btn btn-danger"
           %>
     <% end %>
   </td>
   <td>
-    <% if item.steam_listing.last_request_time %>
-      <%= time_ago_in_words(item.steam_listing.last_request_time) %> ago
+    <% if item.last_steam_request %>
+      <%= time_ago_in_words(item.last_steam_request.request_time) %> ago
     <% else %>
       <p style="color:thistle">
-        unknown
+        N/A
       </p>
     <% end %>
   </td>

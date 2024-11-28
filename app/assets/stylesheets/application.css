@@ -28,6 +28,11 @@ main {
   min-height: 100vh;
 }
 
+a {
+  width: inherit;
+  color: inherit;
+}
+
 /* Navbar styling */
 .navbar {
   display: flex;
@@ -279,6 +284,7 @@ select {
 }
 
 .market-price {
+  text-decoration: none;
   background-color: var(--light-bg);
   list-style: none;
   padding: 0.5rem 1rem;

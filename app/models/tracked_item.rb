@@ -1,8 +1,9 @@
-include TrackedItemsHelper
-
 class TrackedItem < ApplicationRecord
+  include ApiHelper
+
   has_one :steam_listing, dependent: :destroy
   has_one :skinport_listing, dependent: :destroy
+  has_many :api_requests, dependent: :destroy
 
   enum :wear, {
     non_wear_item: 0,
@@ -13,15 +14,17 @@ class TrackedItem < ApplicationRecord
     battle_scarred: 5
   }, default: :non_wear_item
 
-    validates :wear, inclusion: { in: wears.keys }
-    validates :name, presence: true, allow_blank: false
-    validates :stattrak, inclusion: { in: [ true, false ] }
-    validates :souvenir, inclusion: { in: [ true, false ] }
-    validates_associated :steam_listing, presence: true
+  validates :wear, inclusion: { in: wears.keys }
+  validates :name, presence: true, allow_blank: false
+  validates :stattrak, inclusion: { in: [ true, false ] }
+  validates :souvenir, inclusion: { in: [ true, false ] }
+  validates_associated :steam_listing, presence: true
 
-  def steam_url = steam_listing.url
-  def steam_price_overview_url = steam_listing.price_overview_url
-  def image_url = steam_listing.image_url
+  def steam_api_url = steam_api_price_overview_url(self)
+  def steam_url = steam_market_url(self)
+  def image_url = steam_market_image_url(self)
+
+  def last_steam_request = api_requests.to_steam.last
 
   def wear_name_short
     {
@@ -46,5 +49,9 @@ class TrackedItem < ApplicationRecord
   def market_hash_name
     return name if non_wear_item?
     "#{name} (#{wear_name_long})"
+  end
+
+  def uri_encoded_market_hash_name
+    URI.encode_uri_component(market_hash_name)
   end
 end
