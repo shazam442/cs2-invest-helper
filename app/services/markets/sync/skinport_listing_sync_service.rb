@@ -7,9 +7,8 @@ class SkinportListingSyncService
 
   def sync
     listings_data = SkinportApiService.new.fetch_web_listings
-    return false if not listings_data.any?
 
-    to_json_file(listings_data, skinport_listings_file_path)
+    to_json_file(listings_data, skinport_listings_file_path) if listings_data.any?
     persist_listings_file_to_db
   end
 
@@ -20,17 +19,17 @@ class SkinportListingSyncService
 
     catalog = JSON.parse(File.read(fp))
 
-    catalog_without_processed_listings = catalog.reject { |listing| process_listing(listing) }
+    updated_listings = catalog.select do |listing|
+      next unless matches_tracked_item?(listing)
+      update_tracked_item(listing)
+    end
+    return false if not updated_listings.any?
+
+    catalog_without_processed_listings = catalog - updated_listings
 
     # remove the listings that were persisted to the db
     to_json_file(catalog_without_processed_listings, fp)
     true
-  end
-
-  def process_listing(listing_data)
-    return false unless matches_tracked_item?(listing_data)
-
-    update_tracked_item(listing_data)
   end
 
   def matches_tracked_item?(listing_data)

@@ -1,7 +1,7 @@
 class SteamListing < ApplicationRecord
   belongs_to :tracked_item
 
-  after_create :sync_price
+  after_create -> { SteamListingSyncService.new(tracked_item).sync }
 
   validates :tracked_item, presence: true
 

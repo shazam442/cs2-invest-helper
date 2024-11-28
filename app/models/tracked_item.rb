@@ -19,6 +19,7 @@ class TrackedItem < ApplicationRecord
   validates :stattrak, inclusion: { in: [ true, false ] }
   validates :souvenir, inclusion: { in: [ true, false ] }
   validates_associated :steam_listing, presence: true
+  validates_associated :skinport_listing, presence: true
 
   def steam_api_url = steam_api_price_overview_url(self)
   def steam_url = steam_market_url(self)
@@ -53,5 +54,12 @@ class TrackedItem < ApplicationRecord
 
   def uri_encoded_market_hash_name
     URI.encode_uri_component(market_hash_name)
+  end
+
+  private
+
+  def build_associations
+    build_steam_listing
+    build_skinport_listing
   end
 end

@@ -49,7 +49,7 @@ class TrackedItemsController < ApplicationController
     alerts = []
 
     notices << "Skinport synced" unless not skinport_sync_succeeded
-    alerts << "Using cached data for Skinport -- next sync possible in #{ApiRequest.seconds_until_next_skinport_request} seconds" if not skinport_sync_succeeded
+    alerts << "No (new) data for Skinport -- try again in #{ApiRequest.seconds_until_next_skinport_request} seconds" if not skinport_sync_succeeded
 
     notices << "Steam synced" unless not steam_sync_succeeded
     alerts << "Steam not synced" if not steam_sync_succeeded
