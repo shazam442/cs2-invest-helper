@@ -1,5 +1,6 @@
 class TrackedItem < ApplicationRecord
   include ApiHelper
+  include MarketHelper
 
   has_one :steam_listing, dependent: :destroy
   has_one :skinport_listing, dependent: :destroy
@@ -24,6 +25,14 @@ class TrackedItem < ApplicationRecord
   def steam_api_url = steam_api_price_overview_url(self)
   def steam_url = steam_market_url(self)
   def image_url = steam_market_image_url(self)
+
+  def intermarket_min_price
+    listing = [ steam_listing, skinport_listing ].min_by(&:min_price)
+    {
+      market: market_name(listing),
+      min_price: listing.min_price
+    }
+  end
 
   def last_steam_request = api_requests.to_steam.last
 
