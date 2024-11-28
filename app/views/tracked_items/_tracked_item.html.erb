@@ -8,9 +8,12 @@
   </td>
   <% if item.last_steam_request&.success %>
     <td>
-      <%= item.steam_listing.min_price.to_s + "€" %>
-      <%= (item.steam_listing.median_price.to_s + "€ median price") if !item.steam_listing.min_price && item.steam_listing.median_price %>
-      <%= "no data" unless item.steam_listing.min_price || item.steam_listing.median_price %>
+      <% min_price_listing = item.intermarket_min_price_listing %>
+      <% if not min_price_listing[:min_price].nil? %>
+        <%= min_price_listing[:min_price].to_s + " €" %>
+      <% else %>
+        N/A
+      <% end %>
     </td>
     <td><%= item.steam_listing.volume_sold || "no data" %></td>
   <% else %>

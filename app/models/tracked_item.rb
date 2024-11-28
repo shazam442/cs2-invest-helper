@@ -26,8 +26,8 @@ class TrackedItem < ApplicationRecord
   def steam_url = steam_market_url(self)
   def image_url = steam_market_image_url(self)
 
-  def intermarket_min_price
-    listing = [ steam_listing, skinport_listing ].min_by(&:min_price)
+  def intermarket_min_price_listing
+    listing = [ steam_listing, skinport_listing ].min_by { |listing| listing.min_price || Float::INFINITY }
     {
       market: market_name(listing),
       min_price: listing.min_price
