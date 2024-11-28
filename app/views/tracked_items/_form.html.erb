@@ -16,7 +16,20 @@
   <%# choose from selection %>
   <div style="margin: 0.7rem 0">
     <%= form.label :wear, style: "display: block" %>
-    <%= form.select :wear, get_new_form_wear_options %>
+    <%= form.select :wear, get_form_wear_options %>
+  </div>
+  <%# add form field where either Souvenir or Stattrak can be checked %>
+  <div style="margin: 0.7rem 0">
+    <%= form.label :stattrak, style: "display: block" %>
+    <%= form.check_box :stattrak %>
+  </div>
+  <div style="margin: 0.7rem 0">
+    <%= form.label :souvenir, style: "display: block" %>
+    <%= form.check_box :souvenir %>
+  </div>
+  <div style="margin: 0.7rem 0">
+    <%= form.label :item_type, style: "display: block" %>
+    <%= form.select :item_type, TrackedItem.item_types %>
   </div>
   <div style="display: flex; align-items: center; margin: 1.2rem 0">
     <%= form.submit tracked_item.new_record? ? "Create Tracked Item" : "Update Tracked Item", class: "btn btn-primary" %>

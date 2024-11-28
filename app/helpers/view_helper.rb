@@ -11,7 +11,7 @@ module ViewHelper
     "https://www.silicon.co.uk/wp-content/uploads/2021/07/rickroll-00003.png"
   end
 
-  def get_new_form_wear_options
+  def get_form_wear_options
     wear_display_names = {
       factory_new: "Factory New",
       minimal_wear: "Minimal Wear",
