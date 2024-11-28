@@ -16,7 +16,7 @@
   <%# choose from selection %>
   <div style="margin: 0.7rem 0">
     <%= form.label :wear, style: "display: block" %>
-    <%= form.select :wear, @wear_options %>
+    <%= form.select :wear, get_new_form_wear_options %>
   </div>
   <div style="display: flex; align-items: center; margin: 1.2rem 0">
     <%= form.submit tracked_item.new_record? ? "Create Tracked Item" : "Update Tracked Item", class: "btn btn-primary" %>

@@ -1,6 +1,5 @@
 class TrackedItemsController < ApplicationController
   before_action :set_tracked_item, only: [ :show, :destroy, :trigger_price_sync, :edit, :update ]
-  before_action :set_wear_options, only: [ :new, :edit, :create, :update ]
 
   def index
     @sort_direction = params[:direction] || :asc
@@ -69,18 +68,5 @@ class TrackedItemsController < ApplicationController
   def set_tracked_item
     @tracked_item = TrackedItem.find_by(id: params[:id])
     redirect_to tracked_items_path, alert: "TrackedItem not found." unless @tracked_item
-  end
-
-  def set_wear_options
-    wear_display_names = {
-      factory_new: "Factory New",
-      minimal_wear: "Minimal Wear",
-      field_tested: "Field-Tested",
-      well_worn: "Well-Worn",
-      battle_scarred: "Battle-Scarred"
-    }
-    @wear_options = wear_display_names.map do |wear, display_name|
-      [ display_name, wear ]
-    end
   end
 end

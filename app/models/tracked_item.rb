@@ -1,6 +1,5 @@
 class TrackedItem < ApplicationRecord
   include ApiHelper
-  include ViewHelper
 
   has_one :steam_listing, dependent: :destroy
   has_one :skinport_listing, dependent: :destroy
