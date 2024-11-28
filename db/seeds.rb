@@ -10,7 +10,7 @@
 
 # Create a TrackedItem
 items = [
-  TrackedItem.find_or_initialize_by(name: "M9 Bayonet | Tiger Tooth", wear: :field_tested),
+  TrackedItem.find_or_initialize_by(name: "M9 Bayonet | Tiger Tooth", wear: :field_tested, item_type: :knife),
   TrackedItem.find_or_initialize_by(name: "Nova | Wurst Hölle", wear: :factory_new),
   TrackedItem.find_or_initialize_by(name: "M249 | Humidor", wear: :factory_new),
   TrackedItem.find_or_initialize_by(name: "M4A1-S | Leaded Glass", wear: :field_tested),

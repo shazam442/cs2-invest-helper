@@ -15,6 +15,18 @@ class TrackedItem < ApplicationRecord
     battle_scarred: 5
   }, default: :non_wear_item
 
+  enum :item_type, {
+    weapon: 0,
+    knife: 1,
+    glove: 2,
+    case: 3,
+    package: 4,
+    capsule: 5,
+    sticker: 6,
+    agent: 7,
+    misc: 8
+  }, default: :weapon
+
   validates :wear, inclusion: { in: wears.keys }
   validates :name, presence: true, allow_blank: false
   validates :stattrak, inclusion: { in: [ true, false ] }
@@ -24,7 +36,9 @@ class TrackedItem < ApplicationRecord
 
   def steam_api_url = steam_api_price_overview_url(self)
   def steam_url = steam_market_url(self)
+  def skinport_url = skinport_market_url(self)
   def image_url = steam_market_image_url(self)
+  def min_price_url = min_price_market_url(self)
 
   def intermarket_min_price_listing
     [ steam_listing, skinport_listing ].min_by { |listing| listing.min_price || Float::INFINITY }
@@ -57,8 +71,13 @@ class TrackedItem < ApplicationRecord
   end
 
   def market_hash_name
-    return name if non_wear_item?
-    "#{name} (#{wear_name_long})"
+    full_name = ""
+    full_name += "★ " if knife?
+    full_name += "StatTrak™ " if stattrak
+    full_name += "Souvenir " if souvenir
+    full_name += name
+    full_name += " (#{wear_name_long})" unless non_wear_item?
+    full_name
   end
 
   def uri_encoded_market_hash_name

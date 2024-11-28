@@ -8,7 +8,7 @@
         <img src=<%= steam_icon_url %> alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
         <%= @tracked_item.steam_listing.min_price %>
       <% end %>
-      <%= link_to @tracked_item.skinport_listing.market_page, class:"market-price", target: :blank do %>
+      <%= link_to @tracked_item.skinport_url, class:"market-price", target: :blank do %>
         <img src=<%= skinport_icon_url %> alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
         <%= @tracked_item.skinport_listing.min_price %>
       <% end %>
@@ -34,7 +34,7 @@
           <b><%= @tracked_item.wear_name_short %></b>
         </span>
       </div>
-      <%= link_to market_url_for_listing(@tracked_item.intermarket_min_price_listing), id: "min-price", target: :blank do %>
+      <%= link_to @tracked_item.min_price_url, id: "min-price", target: :blank do %>
         <%# <div id="min-price"> %>
         <b>
           <p><%= @tracked_item.intermarket_min_price %> €</p>

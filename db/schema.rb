@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_28_110525) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_28_184855) do
   create_table "api_requests", force: :cascade do |t|
     t.integer "market", null: false
     t.string "target_url", null: false
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_110525) do
     t.integer "wear", null: false
     t.boolean "stattrak", default: false, null: false
     t.boolean "souvenir", default: false, null: false
+    t.integer "item_type", default: 0, null: false
   end
 
   add_foreign_key "api_requests", "tracked_items"
