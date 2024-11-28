@@ -49,6 +49,8 @@ group :development, :test do
 end
 
 group :development do
+  gem "rails_db"
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "rails_live_reload"
@@ -59,3 +61,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "brotli", "~> 0.6.0"

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SteamMarketPriceOverviewTest < ActiveSupport::TestCase
+class SkinportListingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

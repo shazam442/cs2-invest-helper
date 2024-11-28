@@ -1,90 +1,95 @@
 <div style="display: flex; max-width: 75rem; margin: auto; gap: 3rem">
-  <div id="left-container" class="page-bg-dark" style="width: 25%; height: auto">
-    <%= image_tag @tracked_item.image_url, class: "item-image" %>
+  <div id="show-page-left-container" class="page-bg-dark">
+    <%= link_to @tracked_item.steam_url, class: "item-image", target: "blank_" do %>
+      <%= image_tag @tracked_item.image_url, class: "item-image" %>
+    <% end %>
+    <div class="market-price-container">
+      <%= link_to @tracked_item.steam_url, class: "market-price", target: :blank do %>
+        <img src=<%= steam_icon_url %> alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        <%= @tracked_item.steam_listing.min_price %>
+      <% end %>
+      <%= link_to @tracked_item.skinport_url, class:"market-price", target: :blank do %>
+        <img src=<%= skinport_icon_url %> alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        <%= @tracked_item.skinport_listing.min_price %>
+      <% end %>
+      <div class="market-price">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="steam logo" style="width: 1.5rem; margin-right: 0.5rem">
+        Skinbaron Price
+      </div>
+    </div>
   </div>
   <div
-    id="right-container"
+    id="show-page-right-container"
     class="page-bg-dark"
     style="display: flex; gap: 1rem;
             flex-direction: column; 
             justify-content: space-between; 
             align-items: flex-start;
             width: 75%;
-            padding: 2rem">
-    <div>
-      <h1 style="display: inline; margin: 0"><%= @tracked_item.name %></h1>
-      <span class="wear-<%= @tracked_item.short_wear.downcase %>" style="margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem">
-        <b><%= @tracked_item.short_wear %></b>
+            padding: 1rem 2rem">
+    <div style="display: flex; justify-content: space-between; width: 100%; height: 3rem">
+      <div style="display: flex;">
+        <h1 style="margin: 0"><%= @tracked_item.name %></h1>
+        <span class="wear-<%= @tracked_item.wear_name_short.downcase %> page-bg-light" style="border-radius: 5px; margin-left: 0.5rem; font-size: 1.6rem; padding: 0.3rem; height: fit-content">
+          <b><%= @tracked_item.wear_name_short %></b>
+        </span>
       </div>
-      <%= button_to refresh_price_overview_tracked_item_path(@tracked_item), 
+      <%= link_to @tracked_item.min_price_url, id: "min-price", target: :blank do %>
+        <%# <div id="min-price"> %>
+        <b>
+          <p><%= @tracked_item.intermarket_min_price %> €</p>
+        </b>
+        <%= image_tag get_market_icon_for(@tracked_item), class: "big-price-display-icon" %>
+        <%# </div> %>
+      <% end %>
+    </div>
+    <%= button_to trigger_price_sync_tracked_item_path(@tracked_item), 
         method: :post, 
-        params: { redirect_to: tracked_item_path(@tracked_item) }, 
         style: "margin: 0", 
         class: "btn btn-primary" do %>
-        REFRESH
-      <% end %>
-      <table style="margin: 0 0 0.5rem">
-        <tbody>
-          <tr>
-            <td>ID</td>
-            <td><%= @tracked_item.id %></td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>
-              <%= link_to @tracked_item.name, @tracked_item.steam_market_url, target: "blank_" %>
-              --- <%= link_to "(api)", @tracked_item.steam_market_price_overview.api_url, target: "blank", class: "color-secondary"%>
-            </td>
-          </tr>
-          <tr>
-            <td>Volume Sold</td>
-            <td><%= @tracked_item.steam_volume_sold %></td>
-          </tr>
-          <tr>
-            <td>Lowest Price</td>
-            <td><%= @tracked_item.steam_lowest_price %></td>
-          </tr>
-          <tr>
-            <td>Median Price</td>
-            <td><%= @tracked_item.steam_median_price %></td>
-          </tr>
-          <tr>
-            <td>Last Request Success</td>
-            <td><%= @tracked_item.steam_last_request_success %></td>
-          </tr>
-          <tr>
-            <td>Last Request Time</td>
-            <td><%= time_ago_in_words(@tracked_item.steam_last_request_time) if @tracked_item.steam_last_request_time %></td>
-          </tr>
-          <tr>
-            <td>Created at</td>
-            <td><%= @tracked_item.created_at %></td>
-          </tr>
-          <tr>
-            <td>Updated at</td>
-            <td><%= @tracked_item.updated_at %></td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="display: flex; justify-content: space-between; 
+      REFRESH
+    <% end %>
+    <table style="margin: 0 0 0.5rem">
+      <tbody>
+        <tr>
+          <td>ID</td>
+          <td><%= @tracked_item.id %></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>
+            <%= link_to @tracked_item.name, @tracked_item.steam_url, target: "blank_" %>
+            --- <%= link_to "(api)", @tracked_item.steam_api_url, target: "blank", class: "color-secondary"%>
+          </td>
+        </tr>
+        <tr>
+          <td>Volume Sold</td>
+          <td><%= @tracked_item.steam_listing.volume_sold %></td>
+        </tr>
+        <tr>
+          <td>Lowest Price</td>
+          <td><%= "#{@tracked_item.intermarket_min_price}€ via #{@tracked_item.intermarket_min_price_market_name.capitalize}" %> </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="display: flex; justify-content: space-between; 
               align-items: center">
-        <span>
-          <%= link_to 'Edit', edit_tracked_item_path(@tracked_item), class: "btn btn-primary" %>
-          <%= link_to "Back", tracked_items_path, class: "btn btn-secondary" %>
-        </span>
-        <span>
-          <%= button_to "Delete", tracked_item_path(@tracked_item), 
+      <span>
+        <%= link_to 'Edit', edit_tracked_item_path(@tracked_item), class: "btn btn-primary" %>
+        <%= link_to "Back", tracked_items_path, class: "btn btn-secondary" %>
+      </span>
+      <span>
+        <%= button_to "Delete", tracked_item_path(@tracked_item), 
             method: :delete, 
             class: "btn btn-danger" %>
-        </span>
-      </div>
-      <pre style="width: 100%">
-    <%# add title %>
+      </span>
+    </div>
+    <pre style="width: 100%">
     <code style="display: block">
       <h3 style="margin: 0">Response to last Steam API request</h3>
-      <%= JSON.pretty_generate(@tracked_item.steam_last_request_response) %><%= console %>
+      <%= JSON.pretty_generate(@tracked_item.last_steam_request&.response_body) %>
     </code>
   </pre>
-    </div>
   </div>
+</div>
 </div>
