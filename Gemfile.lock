@@ -83,7 +83,6 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.2.2)
       racc
-    brotli (0.6.0)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -294,7 +293,7 @@ GEM
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
     securerandom (0.3.2)
-    selenium-webdriver (4.26.0)
+    selenium-webdriver (4.27.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -366,7 +365,6 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
-  brotli (~> 0.6.0)
   capybara
   debug
   httparty (~> 0.22.0)
