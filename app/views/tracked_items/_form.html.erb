@@ -29,7 +29,7 @@
   </div>
   <div style="margin: 0.7rem 0">
     <%= form.label :item_type, style: "display: block" %>
-    <%= form.select :item_type, TrackedItem.item_types %>
+    <%= form.select :item_type, TrackedItem.item_types.keys %>
   </div>
   <div style="display: flex; align-items: center; margin: 1.2rem 0">
     <%= form.submit tracked_item.new_record? ? "Create Tracked Item" : "Update Tracked Item", class: "btn btn-primary" %>

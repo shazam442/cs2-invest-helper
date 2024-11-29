@@ -62,7 +62,7 @@ class TrackedItemsController < ApplicationController
   private
 
   def tracked_item_params
-    params.require(:tracked_item).permit(:name, :wear)
+    params.require(:tracked_item).permit(:name, :wear, :item_type, :stattrak, :souvenir)
   end
 
   def set_tracked_item

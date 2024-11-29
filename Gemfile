@@ -25,6 +25,9 @@ gem "jbuilder"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
+# brotli is needed to decompress the responses from the skinport api
+gem "brotli", "~> 0.6.0"
+
 # use newest version of httparty
 gem "httparty", "~> 0.22.0"
 

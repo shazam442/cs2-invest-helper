@@ -5,7 +5,7 @@ module ApiHelper
   end
 
   def skinport_market_url(tracked_item)
-    url = tracked_item.skinport_listing.market_page
+    url = tracked_item.skinport_listing.market_page || rickroll_url
     params = {
       sort: :price,
       order: :asc,

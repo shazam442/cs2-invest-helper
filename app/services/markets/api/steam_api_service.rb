@@ -12,14 +12,21 @@ class SteamApiService
 
     json = JSON.parse(response.body)
     # strip of currency symbol and convert to float
-    min_price = json["lowest_price"]&.gsub(/[^0-9],/, "")&.gsub(",", ".")&.to_f
-    median_price = json["median_price"]&.gsub(/[^0-9],/, "")&.gsub(",", ".")&.to_f
+    min_price = json["lowest_price"]
+    median_price = json["median_price"]
     volume_sold = json["volume"]&.gsub(/\D/, "")&.to_i
 
     {
-      min_price: min_price,
-      median_price: median_price,
+      min_price: clean_price(min_price),
+      median_price: clean_price(median_price),
       volume_sold: volume_sold
     }
+  end
+
+  private
+
+  def clean_price(price)
+    return nil if price.nil?
+    price.gsub(/\s+/, "").gsub(/[^0-9],/, "").gsub(",", ".").to_f
   end
 end

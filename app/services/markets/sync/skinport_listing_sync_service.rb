@@ -3,21 +3,20 @@ class SkinportListingSyncService
 
   def initialize(tracked_item)
     @tracked_item = tracked_item
+    @fp = skinport_listings_file_path
   end
 
   def sync
     listings_data = SkinportApiService.new.fetch_web_listings
 
-    to_json_file(listings_data, skinport_listings_file_path) if listings_data.any?
+    to_json_file(listings_data, @fp) if listings_data.any?
     persist_listings_file_to_db
   end
 
   private
 
   def persist_listings_file_to_db
-    fp = skinport_listings_file_path
-
-    catalog = JSON.parse(File.read(fp))
+    catalog = get_catalog_from_file
 
     updated_listings = catalog.select do |listing|
       next unless matches_tracked_item?(listing)
@@ -25,11 +24,19 @@ class SkinportListingSyncService
     end
     return false if not updated_listings.any?
 
-    catalog_without_processed_listings = catalog - updated_listings
+    new_catalog = catalog - updated_listings
 
     # remove the listings that were persisted to the db
-    to_json_file(catalog_without_processed_listings, fp)
+    to_json_file(new_catalog, @fp)
     true
+  end
+
+  def get_catalog_from_file
+    if not File.exist?(@fp)
+      File.write(@fp, "[]")
+      return []
+    end
+    JSON.parse(File.read(@fp))
   end
 
   def matches_tracked_item?(listing_data)
